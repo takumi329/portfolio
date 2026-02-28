@@ -5,6 +5,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // ========================================
+    // Scroll Progress Bar
+    // ========================================
+    const progressBar = document.querySelector('.progress-bar__fill');
+
+    const updateProgressBar = () => {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+    };
+
+    window.addEventListener('scroll', updateProgressBar);
+    updateProgressBar(); // Initial call
+
+    // ========================================
     // Mobile Navigation Toggle
     // ========================================
     const navToggle = document.querySelector('.nav__toggle');
