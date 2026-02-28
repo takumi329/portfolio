@@ -1,6 +1,6 @@
 /**
  * Portfolio Site - Main JavaScript
- * Features: Smooth scroll, Fade-in animations, Mobile menu
+ * Features: Smooth scroll, Fade-in animations, Mobile menu, Particles, Interactions
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -157,4 +157,115 @@ document.addEventListener('DOMContentLoaded', () => {
             item.style.transitionDelay = `${index * 0.1}s`;
         });
     });
+
+    // ========================================
+    // Floating Particles Animation
+    // ========================================
+    const createParticles = () => {
+        const container = document.querySelector('.hero__particles');
+        if (!container) return;
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 6 + 2;
+            particle.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background: rgba(14, 165, 233, ${Math.random() * 0.3 + 0.1});
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: float ${Math.random() * 10 + 10}s linear infinite;
+                animation-delay: ${Math.random() * 5}s;
+            `;
+            container.appendChild(particle);
+        }
+    };
+
+    createParticles();
+
+    // ========================================
+    // Parallax Effect for Hero
+    // ========================================
+    const heroContent = document.querySelector('.hero__content');
+    let ticking = false;
+
+    const updateParallax = () => {
+        const scrolled = window.pageYOffset;
+        if (heroContent && scrolled < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+            heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+        }
+        ticking = false;
+    };
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+    }
+
+    // ========================================
+    // 3D Tilt Effect for Cards
+    // ========================================
+    const initTiltEffect = () => {
+        if (prefersReducedMotion) return;
+
+        const cards = document.querySelectorAll('.strength-card, .interest-card, .experience-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+    };
+
+    initTiltEffect();
+
+    // ========================================
+    // Ripple Effect for Buttons
+    // ========================================
+    const addRippleEffect = () => {
+        const buttons = document.querySelectorAll('.hero__button, .contact__email');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    };
+
+    addRippleEffect();
 });
