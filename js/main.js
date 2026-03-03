@@ -1,6 +1,6 @@
 /**
  * Portfolio Site - Main JavaScript
- * Features: Smooth scroll, Fade-in animations, Mobile menu, Particles, Interactions
+ * 洗練ミニマル版: スムーズスクロール、フェードイン、モバイルメニュー
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', updateProgressBar);
-    updateProgressBar(); // Initial call
+    updateProgressBar();
 
     // ========================================
     // Mobile Navigation Toggle
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
+        rootMargin: '-80px',
         threshold: 0.1
     };
 
@@ -104,18 +104,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Header Background on Scroll
     // ========================================
     const header = document.querySelector('.header');
-    let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
-        if (currentScrollY > 100) {
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        if (currentScrollY > 50) {
+            header.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
         } else {
-            header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.08)';
+            header.style.boxShadow = 'none';
         }
-
-        lastScrollY = currentScrollY;
     });
 
     // ========================================
@@ -154,42 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
     staggerContainers.forEach(container => {
         const items = container.children;
         Array.from(items).forEach((item, index) => {
-            item.style.transitionDelay = `${index * 0.1}s`;
+            item.style.transitionDelay = `${index * 0.05}s`;
         });
     });
 
     // ========================================
-    // Floating Particles Animation
-    // ========================================
-    const createParticles = () => {
-        const container = document.querySelector('.hero__particles');
-        if (!container) return;
-
-        // Check for reduced motion preference
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
-
-        for (let i = 0; i < 15; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            const size = Math.random() * 6 + 2;
-            particle.style.cssText = `
-                width: ${size}px;
-                height: ${size}px;
-                background: rgba(14, 165, 233, ${Math.random() * 0.3 + 0.1});
-                left: ${Math.random() * 100}%;
-                top: ${Math.random() * 100}%;
-                animation: float ${Math.random() * 10 + 10}s linear infinite;
-                animation-delay: ${Math.random() * 5}s;
-            `;
-            container.appendChild(particle);
-        }
-    };
-
-    createParticles();
-
-    // ========================================
-    // Parallax Effect for Hero
+    // Parallax Effect for Hero (弱める)
     // ========================================
     const heroContent = document.querySelector('.hero__content');
     let ticking = false;
@@ -197,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateParallax = () => {
         const scrolled = window.pageYOffset;
         if (heroContent && scrolled < window.innerHeight) {
-            heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
-            heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+            heroContent.style.transform = `translateY(${scrolled * 0.1}px)`;
+            heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.9));
         }
         ticking = false;
     };
@@ -215,57 +182,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ========================================
-    // 3D Tilt Effect for Cards
+    // Scroll Indicator Fade Out
     // ========================================
-    const initTiltEffect = () => {
-        if (prefersReducedMotion) return;
+    const scrollIndicator = document.querySelector('.hero__scroll');
 
-        const cards = document.querySelectorAll('.strength-card, .interest-card, .experience-card');
-
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
+    if (scrollIndicator) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            if (scrolled > 100) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.transition = 'opacity 0.3s ease';
+            } else {
+                scrollIndicator.style.opacity = '1';
+            }
         });
-    };
-
-    initTiltEffect();
-
-    // ========================================
-    // Ripple Effect for Buttons
-    // ========================================
-    const addRippleEffect = () => {
-        const buttons = document.querySelectorAll('.hero__button, .contact__email');
-
-        buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-
-                this.appendChild(ripple);
-
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-    };
-
-    addRippleEffect();
+    }
 });
