@@ -1,4 +1,4 @@
-﻿/* ========================================
+/* ========================================
    CSS Variables & Design System
    「洗練ミニマル」デザインシステム
 ======================================== */
@@ -36,19 +36,6 @@
     /* グラデーション */
     --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
     --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    --gradient-hero: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
-    --gradient-glow: radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, transparent 70%);
-
-    /* グラスモーフィズム */
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-bg-hover: rgba(255, 255, 255, 0.12);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-border-hover: rgba(255, 255, 255, 0.3);
-
-    /* グロー効果 */
-    --glow-primary: rgba(14, 165, 233, 0.4);
-    --glow-accent: rgba(6, 182, 212, 0.4);
-    --glow-purple: rgba(139, 92, 246, 0.4);
 
     /* ========================================
        Typography - 10段階スケール
@@ -63,8 +50,8 @@
     --text-2xl: 1.5rem;      /* 24px */
     --text-3xl: 1.875rem;    /* 30px */
     --text-4xl: 2.25rem;     /* 36px */
-    --text-hero: clamp(3.5rem, 12vw, 6rem);       /* ヒーロー専用（拡大） */
-    --text-section: clamp(2rem, 5vw, 3rem); /* セクションタイトル（拡大） */
+    --text-hero: clamp(3rem, 10vw, 5rem);       /* ヒーロー専用 */
+    --text-section: clamp(1.75rem, 4vw, 2.5rem); /* セクションタイトル */
 
     /* ========================================
        Spacing - 8pxベースシステム
@@ -121,7 +108,7 @@
 .progress-bar__fill {
     height: 100%;
     width: 0;
-    background: var(--gradient-hero);
+    background: var(--color-secondary);
     transition: width 0.1s ease-out;
 }
 
@@ -179,9 +166,7 @@ a:focus:not(:focus-visible) {
     }
 
     .hero__scroll,
-    .particle,
-    .hero__glow,
-    .hero__shape {
+    .particle {
         animation: none !important;
     }
 }
@@ -340,7 +325,7 @@ ul {
 }
 
 /* ========================================
-   Hero Section - モダン・インパクト
+   Hero Section - 洗練ミニマル
 ======================================== */
 .hero {
     min-height: 100vh;
@@ -350,24 +335,9 @@ ul {
     justify-content: center;
     text-align: center;
     padding: calc(var(--header-height) + var(--space-16)) var(--space-6) var(--space-16);
-    background: linear-gradient(135deg, var(--color-gray-900) 0%, var(--color-gray-800) 50%, #0c1222 100%);
+    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-gray-50) 100%);
     position: relative;
     overflow: hidden;
-}
-
-/* メッシュグリッドパターン */
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
 }
 
 .hero__background {
@@ -383,57 +353,6 @@ ul {
     display: none; /* パーティクル削除 */
 }
 
-/* グロー効果（ぼかし円） */
-.hero__glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
-    animation: glowPulse 8s ease-in-out infinite;
-}
-
-.hero__glow--1 {
-    width: 400px;
-    height: 400px;
-    background: var(--glow-primary);
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.hero__glow--2 {
-    width: 300px;
-    height: 300px;
-    background: var(--glow-accent);
-    top: 50%;
-    right: 15%;
-    animation-delay: -3s;
-}
-
-.hero__glow--3 {
-    width: 350px;
-    height: 350px;
-    background: var(--glow-purple);
-    bottom: 20%;
-    left: 20%;
-    animation-delay: -5s;
-}
-
-@keyframes glowPulse {
-    0%, 100% {
-        transform: scale(1) translate(0, 0);
-        opacity: 0.5;
-    }
-    33% {
-        transform: scale(1.1) translate(20px, -20px);
-        opacity: 0.7;
-    }
-    66% {
-        transform: scale(0.95) translate(-15px, 15px);
-        opacity: 0.4;
-    }
-}
-
 .hero__content {
     max-width: 640px;
     position: relative;
@@ -443,7 +362,7 @@ ul {
 .hero__label {
     font-size: var(--text-sm);
     font-weight: 500;
-    color: var(--color-gray-400);
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: var(--space-4);
@@ -451,11 +370,8 @@ ul {
 
 .hero__title {
     font-size: var(--text-hero);
-    font-weight: 800;
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;
+    color: var(--color-primary);
     margin-bottom: var(--space-6);
     letter-spacing: 0.02em;
     line-height: 1.1;
@@ -468,21 +384,8 @@ ul {
 .hero__role {
     font-size: var(--text-xl);
     font-weight: 500;
-    color: var(--color-gray-300);
+    color: var(--color-text-muted);
     line-height: 1.6;
-}
-
-/* タイピングエフェクト用カーソル */
-.hero__role--typing::after {
-    content: "|";
-    animation: blink 1s step-end infinite;
-    margin-left: 2px;
-    color: var(--color-secondary);
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
 }
 
 .hero__cta {
@@ -497,29 +400,25 @@ ul {
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-4) var(--space-8);
-    border-radius: 8px;
+    border-radius: 4px;
     font-weight: 600;
     font-size: var(--text-sm);
     text-decoration: none;
     letter-spacing: 0.05em;
     transition: all var(--transition-normal);
-    /* グラスモーフィズム */
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
+    background-color: var(--color-primary);
     color: var(--color-surface);
 }
 
 .hero__button:hover {
-    background: var(--glass-bg-hover);
-    border-color: var(--glass-border-hover);
+    background-color: var(--color-gray-800);
     color: var(--color-surface);
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
-
+/* スクロールインジケーター */
+.hero__scroll {
     position: absolute;
     bottom: var(--space-8);
     left: 50%;
@@ -528,14 +427,17 @@ ul {
     flex-direction: column;
     align-items: center;
     gap: var(--space-2);
-    color: var(--color-gray-500);
+    color: var(--color-text-subtle);
     font-size: var(--text-xs);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     animation: scrollFadeIn 1s ease-out 1.5s both;
 }
 
- linear-gradient(180deg, var(--color-gray-500) 0%, transparent 100%);
+.hero__scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(180deg, var(--color-text-subtle) 0%, transparent 100%);
     animation: scrollLine 2s ease-in-out infinite;
 }
 
@@ -550,90 +452,11 @@ ul {
     }
 }
 
-
-
-/* フローティングシェイプアニメーション */
-.hero__shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.hero__shape {
-    position: absolute;
-    opacity: 0.1;
-    animation: float 20s ease-in-out infinite;
-}
-
-.hero__shape--circle {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 2px solid var(--color-secondary);
-    top: 15%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.hero__shape--square {
-    width: 80px;
-    height: 80px;
-    border: 2px solid var(--color-accent);
-    top: 60%;
-    right: 15%;
-    transform: rotate(45deg);
-    animation-delay: -5s;
-}
-
-.hero__shape--triangle {
-    width: 0;
-    height: 0;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    border-bottom: 70px solid rgba(139, 92, 246, 0.3);
-    bottom: 25%;
-    left: 25%;
-    animation-delay: -10s;
-}
-
-.hero__shape--circle-sm {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(14, 165, 233, 0.2);
-    top: 30%;
-    right: 25%;
-    animation-delay: -7s;
-}
-
-.hero__shape--square-sm {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--color-secondary);
-    bottom: 40%;
-    left: 15%;
-    transform: rotate(30deg);
-    animation-delay: -12s;
-}
-
-@keyframes float {
+@keyframes scrollLine {
     0%, 100% {
-        transform: translateY(0) rotate(0deg);
+        transform: scaleY(1);
+        opacity: 1;
     }
-    25% {
-        transform: translateY(-20px) rotate(5deg);
-    }
-    50% {
-        transform: translateY(-10px) rotate(-3deg);
-    }
-    75% {
-        transform: translateY(-30px) rotate(2deg);
-    }
-}
     50% {
         transform: scaleY(0.6);
         opacity: 0.5;
@@ -647,7 +470,9 @@ ul {
     padding: var(--space-20) 0;
 }
 
- 700;
+.section__title {
+    font-size: var(--text-section);
+    font-weight: 600;
     color: var(--color-primary);
     text-align: center;
     margin-bottom: var(--space-12);
@@ -696,19 +521,16 @@ ul {
 }
 
 .strength-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: var(--color-surface);
     padding: var(--space-8);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    border: 1px solid var(--color-border-subtle);
     transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .strength-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.2);
-    border-color: rgba(14, 165, 233, 0.3);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .strength-card__title {
@@ -743,27 +565,7 @@ ul {
     background-color: var(--color-gray-50);
     padding: var(--space-8);
     border-radius: 4px;
-    border-left: 3px solid transparent;
-    position: relative;
-    transition: border-color var(--transition-normal);
-}
-
-/* 左ボーダーアニメーション */
-.experience-card::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--gradient-primary);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform var(--transition-normal);
-}
-
-.experience-card:hover::before {
-    transform: scaleY(1);
+    border-left: 3px solid var(--color-secondary);
 }
 
 .experience-card__title {
@@ -961,21 +763,8 @@ ul {
     transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-/* 傾斜効果 */
-.interest-card:nth-child(1) {
-    transform: rotate(-1deg);
-}
-
-.interest-card:nth-child(2) {
-    transform: rotate(0.5deg);
-}
-
-.interest-card:nth-child(3) {
-    transform: rotate(-0.5deg);
-}
-
 .interest-card:hover {
-    transform: translateY(-4px) rotate(0deg);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
 

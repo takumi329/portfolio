@@ -1,6 +1,6 @@
 /**
  * Portfolio Site - Main JavaScript
- * 洗練ミニマル版: スムーズスクロール、フェードイン、モバイルメニュー
+ * 洗練ミニマル牁E スムーズスクロール、フェードイン、モバイルメニュー
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,8 +182,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ========================================
-    // Scroll Indicator Fade Out
+    // Typing Effect
     // ========================================
+    const typingElement = document.getElementById("typing-text");
+    const prefersReducedMotionTyping = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (typingElement && !prefersReducedMotionTyping) {
+        const text = typingElement.dataset.text || typingElement.textContent;
+        typingElement.textContent = "";
+        typingElement.classList.add("hero__role--typing");
+
+        let charIndex = 0;
+        const typingSpeed = 100; // ms per character
+
+        const typeChar = () => {
+            if (charIndex < text.length) {
+                typingElement.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeChar, typingSpeed);
+            }
+        };
+
+        // Start typing after a short delay
+        setTimeout(typeChar, 800);
+    } else if (typingElement) {
+        // If reduced motion is preferred, just show the text
+        typingElement.textContent = typingElement.dataset.text || typingElement.textContent;
+    }
+
+
     const scrollIndicator = document.querySelector('.hero__scroll');
 
     if (scrollIndicator) {
