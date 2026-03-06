@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Portfolio Site - Main JavaScript
  * 洗練ミニマル牁E スムーズスクロール、フェードイン、モバイルメニュー
  */
