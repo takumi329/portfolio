@@ -1,6 +1,6 @@
 /**
  * Portfolio Site - Main JavaScript
- * 洗練ミニマル牁E スムーズスクロール、フェードイン、モバイルメニュー
+ * 洗練ダーク × エディトリアル - スムーズスクロール、フェードイン、モバイルメニュー
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -113,9 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentScrollY = window.scrollY;
 
         if (currentScrollY > 50) {
-            header.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
+            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
+            header.style.borderBottomColor = 'rgba(245, 158, 11, 0.1)';
         } else {
             header.style.boxShadow = 'none';
+            header.style.borderBottomColor = '';
         }
     });
 
@@ -155,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     staggerContainers.forEach(container => {
         const items = container.children;
         Array.from(items).forEach((item, index) => {
-            item.style.transitionDelay = `${index * 0.05}s`;
+            item.style.transitionDelay = `${index * 0.1}s`;
         });
     });
 
