@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Portfolio Site - Main JavaScript
  * 洗練ミニマル牁E スムーズスクロール、フェードイン、モバイルメニュー
  */
@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => {
             navToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
         });
 
         // Close menu when clicking a link
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
             });
         });
 
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
             }
         });
     }
@@ -87,11 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0.1
     };
 
-    const fadeObserver = new IntersectionObserver((entries) => {
+    const fadeObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                fadeObserver.unobserve(entry.target);
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);

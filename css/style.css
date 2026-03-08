@@ -1,4 +1,4 @@
-﻿/* ========================================
+/* ========================================
    CSS Variables & Design System
    「洗練ミニマル」デザインシステム
 ======================================== */
@@ -519,7 +519,7 @@ ul {
     box-shadow: 0 8px 32px rgba(14, 165, 233, 0.3);
 }
 
-
+.hero__scroll {
     position: absolute;
     bottom: var(--space-8);
     left: 50%;
@@ -535,7 +535,10 @@ ul {
     animation: scrollFadeIn 1s ease-out 1.5s both;
 }
 
- linear-gradient(180deg, var(--color-gray-500) 0%, transparent 100%);
+.hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--color-gray-500) 0%, transparent 100%);
     animation: scrollLine 2s ease-in-out infinite;
 }
 
@@ -634,6 +637,13 @@ ul {
         transform: translateY(-30px) rotate(2deg);
     }
 }
+
+@keyframes scrollLine {
+    0%, 100% {
+        transform: scaleY(1);
+        transform-origin: top;
+        opacity: 1;
+    }
     50% {
         transform: scaleY(0.6);
         opacity: 0.5;
@@ -647,7 +657,9 @@ ul {
     padding: var(--space-20) 0;
 }
 
- 700;
+.section__title {
+    font-size: var(--text-section);
+    font-weight: 700;
     color: var(--color-primary);
     text-align: center;
     margin-bottom: var(--space-12);
